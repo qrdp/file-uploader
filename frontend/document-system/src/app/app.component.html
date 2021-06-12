@@ -1,0 +1,21 @@
+<div class="toolbar" role="banner">
+  <div class="spacer"></div>
+  <span>File Attachment</span>
+  <div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+  <p>QR code</p>
+  <br>
+  <ngx-qrcode class="qr-code"
+              [elementType]="elementType"
+              [value]="value"
+              [errorCorrectionLevel]="correctionLevel">
+  </ngx-qrcode>
+
+  <br>
+
+  <p>Прикрепленный файл</p>
+  <br>
+  <img class="attach" alt="Здесь будет файл">
+</div>
