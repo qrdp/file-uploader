@@ -1,3 +1,5 @@
 package ru.qrdp.uploader.dto
 
-data class FileData(val content: String)
+import java.util.*
+
+data class FileData(val uuid: UUID, val content: String)

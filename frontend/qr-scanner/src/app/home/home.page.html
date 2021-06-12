@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>
+      QR Scanner
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button expand="full" (click)="startScan()" *ngIf="!scanResult">
+    <ion-icon slot="start" name="qr-scanner"></ion-icon>
+    Сканировать QR-код
+  </ion-button>
+
+  <ion-button expand="full" (click)="reset()" color="warning" *ngIf="scanResult">
+    <ion-icon slot="start" name="refresh"></ion-icon>
+    Отмена
+  </ion-button>
+
+  <!-- Shows our camera stream -->
+  <video #video [hidden]="!scanActive" width="100%"></video>
+
+  <!-- Used to render the camera stream images -->
+  <canvas #canvas hidden></canvas>
+
+  <!-- Stop our scanner preview if active -->
+  <ion-button expand="full" (click)="stopScan()" color="danger" *ngIf="scanActive">
+    <ion-icon slot="start" name="close"></ion-icon>
+    Отмена
+  </ion-button>
+
+  <ion-card *ngIf="scanResult">
+    <ion-card-header>
+      <ion-card-title>Куда крепим материал</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ scanResult.info }}
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button expand="full" (click)="takePicture()" *ngIf="scanResult">
+    <ion-icon slot="start" name="qr-scanner"></ion-icon>
+    Фото материала
+  </ion-button>
+
+  <ion-img *ngIf="myImage" [src]="'data:image/jpg;base64,' + myImage"></ion-img>
+
+  <ion-button expand="full" (click)="send()" color="success" *ngIf="myImage">
+    <ion-icon slot="start" name="qr-scanner"></ion-icon>
+    Отправить материал
+  </ion-button>
+
+
+</ion-content>

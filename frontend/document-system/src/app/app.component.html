@@ -7,6 +7,8 @@
 <div class="content" role="main">
   <p>QR code</p>
   <br>
+  <p>{{info}}</p>
+  <br>
   <ngx-qrcode class="qr-code"
               [elementType]="elementType"
               [value]="qrData"
@@ -17,5 +19,5 @@
 
   <p>Прикрепленный файл</p>
   <br>
-  <img class="attach" alt="Здесь будет файл" src="assets/no-image.png">
+  <img class="attach" alt="Здесь будет файл" [src]="imgContent">
 </div>
