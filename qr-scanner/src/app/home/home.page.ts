@@ -119,7 +119,8 @@ export class HomePage {
     this.fileinput.nativeElement.click();
   }
 
-  handleFile(files: FileList) {
+  handleFile(e: any) {
+    const files: FileList = e.files;
     const file = files.item(0);
     const reader = new FileReader();
 

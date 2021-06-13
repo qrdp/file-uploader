@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <input #fileinput type="file" accept="image/*;capture=camera" hidden (change)="handleFile($event.target.files)">
+  <input #fileinput type="file" accept="image/*;capture=camera" hidden (change)="handleFile($event.target)">
 
   <ion-button expand="full" (click)="startScan()" *ngIf="!scanResult">
     <ion-icon slot="start" name="qr-scanner"></ion-icon>
