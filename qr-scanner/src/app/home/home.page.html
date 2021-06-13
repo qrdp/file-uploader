@@ -7,6 +7,8 @@
 </ion-header>
 
 <ion-content>
+  <input #fileinput type="file" accept="image/*;capture=camera" hidden (change)="handleFile($event.target.files)">
+
   <ion-button expand="full" (click)="startScan()" *ngIf="!scanResult">
     <ion-icon slot="start" name="qr-scanner"></ion-icon>
     Сканировать QR-код
@@ -38,16 +40,16 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-button expand="full" (click)="takePicture()" *ngIf="scanResult">
+  <ion-button expand="full" (click)="captureImage()" *ngIf="scanResult">
     <ion-icon slot="start" name="qr-scanner"></ion-icon>
-    Фото материала
+    Прикрепить материал
   </ion-button>
 
-  <ion-img *ngIf="myImage" [src]="'data:image/jpg;base64,' + myImage"></ion-img>
+  <ion-img *ngIf="myImage" [src]="myImage"></ion-img>
 
-  <ion-button expand="full" (click)="send()" color="success" *ngIf="myImage">
+  <ion-button expand="full" (click)="send()" color="success" *ngIf="myImage" [disabled]="uploading">
     <ion-icon slot="start" name="qr-scanner"></ion-icon>
-    Отправить материал
+    {{!uploading ? 'Отправить материал' : 'Загружаем...' }}
   </ion-button>
 
 

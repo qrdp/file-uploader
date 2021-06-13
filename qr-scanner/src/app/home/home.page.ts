@@ -1,9 +1,8 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingController, Platform, ToastController} from "@ionic/angular";
-import {Camera, CameraDirection, CameraResultType, CameraSource} from '@capacitor/camera';
-import jsQR from "jsqr";
-import {HttpClient} from "@angular/common/http";
-import {Urls} from "../urls";
+import {LoadingController, Platform, ToastController} from '@ionic/angular';
+import jsQR from 'jsqr';
+import {HttpClient} from '@angular/common/http';
+import {Urls} from '../urls';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +22,7 @@ export class HomePage {
   loading: HTMLIonLoadingElement = null;
 
   myImage = null;
+  uploading = false;
 
   constructor(
     private toastCtrl: ToastController,
@@ -47,6 +47,7 @@ export class HomePage {
   reset() {
     this.scanResult = null;
     this.myImage = null;
+    this.uploading = false;
   }
 
   stopScan() {
@@ -114,19 +115,27 @@ export class HomePage {
     }
   }
 
-  async takePicture() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Base64,
-      source: CameraSource.Camera,
-      direction: CameraDirection.Rear
-    });
+  captureImage() {
+    this.fileinput.nativeElement.click();
+  }
 
-    this.myImage = image.base64String;
+  handleFile(files: FileList) {
+    const file = files.item(0);
+    const reader = new FileReader();
+
+    reader.onload = (event: any) => {
+      this.myImage = event.target.result;
+    };
+
+    reader.onerror = (event: any) => {
+      console.log('File could not be read: ' + event.target.error.code);
+    };
+
+    reader.readAsDataURL(file);
   }
 
   send() {
+    // this.uploading = true;
     this.http.post(Urls.uploadFile(), {uuid: this.scanResult.uuid, content: this.myImage})
       .subscribe(r => {
         this.reset();

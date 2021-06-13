@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
   private fileLoaded(data: any) {
     this.ngZone.run(() => {
-      this.imgContent = 'data:image/jpg;base64,' + data.content;
+      this.imgContent = data.content;
     })
   }
 }
