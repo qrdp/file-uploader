@@ -9,13 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy Backend to Heroku
-        uses: behe/heroku-build@v1
-        with:
-          app-name: "qrdp-doc-uploader"
-          api-key: "${{secrets.HEROKU_API_KEY}}"
-          path: "backend"
       - name: Deploy Doc-System to Heroku
         uses: behe/heroku-build@v1
         with:
