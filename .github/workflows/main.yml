@@ -13,6 +13,6 @@ jobs:
       - name: Deploy to Heroku
         uses: behe/heroku-build@v1
         with:
-          app-name: "your-app-name-on-heroku"
+          app-name: "qrdp-doc-uploader"
           api-key: "${{secrets.HEROKU_API_KEY}}"
           path: "backend"
