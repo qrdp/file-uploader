@@ -22,3 +22,9 @@ jobs:
           app-name: "qrdp-doc-uploader"
           api-key: "${{secrets.HEROKU_API_KEY}}"
           path: "backend"
+      - name: Deploy Documebts to Heroku
+        uses: behe/heroku-build@v1
+        with:
+          app-name: "qrdp-doc-system"
+          api-key: "${{secrets.HEROKU_API_KEY}}"
+          path: "documents"

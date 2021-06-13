@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'https://qrdp-doc-uploader.herokuapp.com'
+  host: 'http://localhost:8080'
 };
 
 /*
