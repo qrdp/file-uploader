@@ -3,6 +3,7 @@ import {LoadingController, Platform, ToastController} from '@ionic/angular';
 import jsQR from 'jsqr';
 import {HttpClient} from '@angular/common/http';
 import {Urls} from '../urls';
+import compress from 'compress-base64';
 
 @Component({
   selector: 'app-home',
@@ -127,7 +128,15 @@ export class HomePage {
     const reader = new FileReader();
 
     reader.onload = (event: any) => {
-      this.myImage = event.target.result;
+      compress(event.target.result, {
+        width: 900,
+        type: 'image/png', // default
+        max: 500, // max size
+        min: 20, // min size
+        quality: 0.8
+      }).then(result => {
+        this.myImage = result;
+      });
     };
 
     reader.onerror = (event: any) => {
