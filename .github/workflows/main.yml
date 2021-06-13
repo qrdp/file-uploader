@@ -10,9 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Deploy to Heroku
+      - name: Deploy QR Scanner to Heroku
         uses: behe/heroku-build@v1
         with:
           app-name: "qrdp-qr-scanner"
           api-key: "${{secrets.HEROKU_API_KEY}}"
           path: "qr-scanner"
+      - name: Deploy Backend to Heroku
+        uses: behe/heroku-build@v1
+        with:
+          app-name: "qrdp-doc-uploader"
+          api-key: "${{secrets.HEROKU_API_KEY}}"
+          path: "backend"
