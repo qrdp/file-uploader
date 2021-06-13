@@ -23,6 +23,7 @@ export class HomePage {
 
   myImage = null;
   uploading = false;
+  error = false;
 
   constructor(
     private toastCtrl: ToastController,
@@ -48,6 +49,7 @@ export class HomePage {
     this.scanResult = null;
     this.myImage = null;
     this.uploading = false;
+    this.error = false;
   }
 
   stopScan() {
@@ -139,8 +141,11 @@ export class HomePage {
     this.uploading = true;
     this.http.post(Urls.uploadFile(), {uuid: this.scanResult.uuid, content: this.myImage})
       .subscribe(r => {
-        this.reset();
-      });
+          this.reset();
+        },
+        error => {
+          this.error = true;
+        });
   }
 }
 

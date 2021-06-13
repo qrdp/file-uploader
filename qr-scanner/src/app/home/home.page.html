@@ -49,7 +49,7 @@
 
   <ion-button expand="full" (click)="send()" color="success" *ngIf="myImage" [disabled]="uploading">
     <ion-icon slot="start" name="qr-scanner"></ion-icon>
-    {{!uploading ? 'Отправить материал' : 'Загружаем...' }}
+    {{ error ? 'Произошла ошибка...' :  (!uploading ? 'Отправить материал' : 'Загружаем...') }}
   </ion-button>
 
 
