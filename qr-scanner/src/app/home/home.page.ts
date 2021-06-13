@@ -136,7 +136,7 @@ export class HomePage {
   }
 
   send() {
-    // this.uploading = true;
+    this.uploading = true;
     this.http.post(Urls.uploadFile(), {uuid: this.scanResult.uuid, content: this.myImage})
       .subscribe(r => {
         this.reset();

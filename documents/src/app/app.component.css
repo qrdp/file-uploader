@@ -298,5 +298,6 @@ svg#clouds {
 }
 
 .attach {
-  width: 400px;
+  max-width: 1200px;
+  min-width: 600px;
 }
