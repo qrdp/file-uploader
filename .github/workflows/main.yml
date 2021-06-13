@@ -13,6 +13,6 @@ jobs:
       - name: Deploy to Heroku
         uses: behe/heroku-build@v1
         with:
-          app-name: "qrdp-doc-system"
+          app-name: "qrdp-qr-scanner"
           api-key: "${{secrets.HEROKU_API_KEY}}"
-          path: "documents"
+          path: "qr-scanner"
