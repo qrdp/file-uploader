@@ -14,4 +14,4 @@ jobs:
         with:
           app-name: "qrdp-doc-system"
           api-key: "${{secrets.HEROKU_API_KEY}}"
-          path: "./document-system"
+          path: "./documents"
