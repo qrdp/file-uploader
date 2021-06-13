@@ -135,7 +135,6 @@ export class HomePage {
         min: 20, // min size
         quality: 0.8
       }).then(result => {
-        console.log(result);
         this.myImage = result;
       });
     };
