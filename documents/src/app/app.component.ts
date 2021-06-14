@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Urls} from "./urls";
 import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from '@techiediaries/ngx-qrcode';
 import {Observable} from "rxjs";
+import {delay, retryWhen, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,9 @@ export class AppComponent implements OnInit {
       console.log(data);
       this.qrData = JSON.stringify(data);
       this.getFile(data.uuid)
-        .pipe()
+        .pipe(
+          retryWhen(errors => errors.pipe(delay(1000), take(10)))
+        )
         .subscribe(
           message => this.fileLoaded(JSON.parse(message.data))
         );
