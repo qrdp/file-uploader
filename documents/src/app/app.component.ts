@@ -2,8 +2,6 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Urls} from "./urls";
 import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from '@techiediaries/ngx-qrcode';
-import {Observable} from "rxjs";
-import {delay, retryWhen, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -17,6 +15,7 @@ export class AppComponent implements OnInit {
   qrData = '';
   info = `Тестовый документ № АМ-1-${Math.floor(Math.random() * 225) + 1}/21`;
   imgContent: any = 'assets/no-image.png';
+  es?: EventSource;
 
   constructor(private http: HttpClient, private ngZone: NgZone) {
   }
@@ -29,29 +28,28 @@ export class AppComponent implements OnInit {
     this.http.get(Urls.qrData(this.info)).subscribe((data: any) => {
       console.log(data);
       this.qrData = JSON.stringify(data);
-      this.getFile(data.uuid)
-        .pipe(
-          retryWhen(errors => errors.pipe(delay(1000), take(10)))
-        )
-        .subscribe(
-          message => this.fileLoaded(JSON.parse(message.data))
-        );
+      this.getFile(data.uuid);
     });
   }
 
-  private getFile(uuid: string): Observable<any> {
-    return new Observable(obs => {
-      const es = new EventSource(Urls.fileData(uuid));
-      es.onmessage = data => {
-        obs.next(data)
-      }
+  private getFile(uuid: any) {
+    if (this.es) {
+      this.es.close();
+    }
+    setTimeout(() => {
+      this.getFile(uuid);
+    }, 25 * 1000)
 
-      es.onerror = () => {
-        es.close();
-      }
-      return () => es.close();
-    });
+    this.es = new EventSource(Urls.fileData(uuid));
+    this.es.onmessage = (data: any) => {
+      this.fileLoaded(JSON.parse(data.data))
+    }
+
+    this.es.onerror = () => {
+      this.es?.close();
+    }
   }
+
 
   private fileLoaded(data: any) {
     this.ngZone.run(() => {
