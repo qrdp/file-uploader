@@ -45,6 +45,10 @@ export class AppComponent implements OnInit {
       es.onmessage = data => {
         obs.next(data)
       }
+
+      es.onerror = () => {
+        es.close();
+      }
       return () => es.close();
     });
   }
