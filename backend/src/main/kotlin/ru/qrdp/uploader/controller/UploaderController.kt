@@ -30,8 +30,12 @@ class UploaderController {
 
     @PostMapping("/upload")
     fun upload(@RequestBody data: FileData) {
-        log.info("Uploaded {}", data.uuid)
-        emitters[data.uuid]?.send(data)
+        try {
+            log.info("Uploaded {}", data.uuid)
+            emitters[data.uuid]?.send(data)
+        } catch (e: Exception) {
+            log.error("Uploading error", e);
+        }
     }
 
 }
