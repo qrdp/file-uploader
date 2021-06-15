@@ -33,7 +33,7 @@
 
   <ion-card *ngIf="scanResult">
     <ion-card-header>
-      <ion-card-title>Куда крепим материал</ion-card-title>
+      <ion-card-title>Документ</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       {{ scanResult.info }}
@@ -42,7 +42,7 @@
 
   <ion-button expand="full" (click)="captureImage()" *ngIf="scanResult">
     <ion-icon slot="start" name="qr-scanner"></ion-icon>
-    Прикрепить материал
+    Выбрать файл/Сделать фото
   </ion-button>
 
   <ion-img *ngIf="myImage" [src]="myImage"></ion-img>
