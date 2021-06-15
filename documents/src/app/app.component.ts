@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     this.http.get(Urls.qrData(this.info)).subscribe((data: any) => {
       console.log(data);
       this.qrData = JSON.stringify(data);
-      timer(0,25 * 1000)
+      timer(0, 25 * 1000)
         .pipe(switchMap(() => this.getFile(data.uuid)))
         .subscribe(
           message => this.fileLoaded(JSON.parse(message.data))
