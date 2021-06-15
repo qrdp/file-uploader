@@ -2,6 +2,8 @@ import {Component, NgZone, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Urls} from "./urls";
 import {NgxQrcodeElementTypes, NgxQrcodeErrorCorrectionLevels} from '@techiediaries/ngx-qrcode';
+import {interval, Observable, timer} from "rxjs";
+import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -28,26 +30,22 @@ export class AppComponent implements OnInit {
     this.http.get(Urls.qrData(this.info)).subscribe((data: any) => {
       console.log(data);
       this.qrData = JSON.stringify(data);
-      this.getFile(data.uuid);
+      timer(0,25 * 1000)
+        .pipe(switchMap(() => this.getFile(data.uuid)))
+        .subscribe(
+          message => this.fileLoaded(JSON.parse(message.data))
+        );
     });
   }
 
-  private getFile(uuid: any) {
-    if (this.es) {
-      this.es.close();
-    }
-    setTimeout(() => {
-      this.getFile(uuid);
-    }, 25 * 1000)
-
-    this.es = new EventSource(Urls.fileData(uuid));
-    this.es.onmessage = (data: any) => {
-      this.fileLoaded(JSON.parse(data.data))
-    }
-
-    this.es.onerror = () => {
-      this.es?.close();
-    }
+  private getFile(uuid: string): Observable<any> {
+    return new Observable(obs => {
+      const es = new EventSource(Urls.fileData(uuid));
+      es.onmessage = data => {
+        obs.next(data)
+      }
+      return () => es.close();
+    });
   }
 
 
